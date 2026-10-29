@@ -181,3 +181,38 @@ orginally
 now
 	private endGame(): void {
 		this.stopTimer();
+
+----------------------------------------------------------------------------------------------------
+
+## Ticket 5: Leaderboard dates show "undefined"
+
+GameScreenController's endGame function had this.stopTimer, which doesnt call the function
+
+backwards testing, i played the game then saw that the game kept submitting scores,
+so i saw the game didnt end
+
+i then investigated where the end game functionality is
+
+i saw the function wasnt being called.
+
+orginally
+	private endGame(): void {
+		this.stopTimer;
+
+now
+	private endGame(): void {
+		this.stopTimer();
+
+## Ticket 6: My high score disappeared from the leaderboard
+the entries are sorted in teh oppositve order
+
+i considered where we sorted the entires since i assume that the ordering logic that i want to change
+i sorted correctly
+
+in /server/index.ts
+
+orginal
+	entries.sort((a, b) => a.score - b.score); // Sort descending
+
+fixed
+    entries.sort((a, b) => b.score - a.score); // Sort ascending
