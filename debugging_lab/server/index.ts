@@ -1,7 +1,7 @@
 import express from "express";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
-type LeaderboardEntry = { score: number; time: string };
+type LeaderboardEntry = { score: number; timestamp: string };
 const LEADERBOARD_FILE = new URL("./leaderboard.json", import.meta.url);
 const MAX_LEADERBOARD_ENTRIES = 5;
 const app = express();
@@ -34,7 +34,7 @@ app.post("/api/leaderboard", (req, res) => {
 
 	// Add the new score, then keep only the top entries
 	const entries = loadLeaderboard();
-	entries.push({ score, time: new Date().toLocaleString() });
+	entries.push({ score, timestamp: new Date().toLocaleString() });
 	entries.sort((a, b) => b.score - a.score); // Sort descending
 	const topEntries = entries.slice(0, MAX_LEADERBOARD_ENTRIES);
 	saveLeaderboard(topEntries);

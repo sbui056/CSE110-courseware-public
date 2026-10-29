@@ -186,22 +186,25 @@ now
 
 ## Ticket 5: Leaderboard dates show "undefined"
 
-GameScreenController's endGame function had this.stopTimer, which doesnt call the function
+i see that the leaderboard.json records the time
+ but we dont show the time
 
-backwards testing, i played the game then saw that the game kept submitting scores,
-so i saw the game didnt end
+ so it must be somethign that controls the entry's time or the leadrboard
 
-i then investigated where the end game functionality is
+ i investigate leaderboard display and saw that everything checkout with the timestamp variable
 
-i saw the function wasnt being called.
+ i then needed to see the actual entry itself
 
-orginally
-	private endGame(): void {
-		this.stopTimer;
+ i say that the entry declared it as 'time' instad of time stamp
 
-now
-	private endGame(): void {
-		this.stopTimer();
+ so in /server/index.ts,
+ 
+  it orginally had type LeaderboardEntry = { score: number; time: string };
+
+    i changed it to type LeaderboardEntry = { score: number; timestamp: string };
+    and updated the 	entries.push({ score, time: new Date().toLocaleString() }); in the post request to 	entries.push({ score, timestamp: new Date().toLocaleString() });
+
+it works i see the updated leaderboard
 
 ## Ticket 6: My high score disappeared from the leaderboard
 the entries are sorted in teh oppositve order
@@ -216,3 +219,5 @@ orginal
 
 fixed
     entries.sort((a, b) => b.score - a.score); // Sort ascending
+
+it works i see the correct ordering.
