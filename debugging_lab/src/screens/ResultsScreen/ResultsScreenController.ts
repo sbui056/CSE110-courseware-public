@@ -61,6 +61,7 @@ export class ResultsScreenController extends ScreenController {
 		if (!response.ok) {
 			throw new Error("Unable to save score");
 		}
+		console.log(response)
 		return (await response.json()) as LeaderboardEntry[];
 	}
 

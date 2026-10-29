@@ -162,3 +162,22 @@ WRONG
 i played the game and saw updated random positions
 
 ----------------------------------------------------------------------------------------------------
+
+## Ticket 4: Stuck on the Game Over screen
+
+GameScreenController's endGame function had this.stopTimer, which doesnt call the function
+
+backwards testing, i played the game then saw that the game kept submitting scores,
+so i saw the game didnt end
+
+i then investigated where the end game functionality is
+
+i saw the function wasnt being called.
+
+orginally
+	private endGame(): void {
+		this.stopTimer;
+
+now
+	private endGame(): void {
+		this.stopTimer();
