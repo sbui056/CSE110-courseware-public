@@ -107,22 +107,27 @@ i saw the expected behavior whne displaying the score report in the menu
 ---
 
 
-## Ticket 2: Best score always shows 0
+## Ticket 3: The lemon only lands in four spots
 
 ### Actual cause
 
 <!-- Which file and function was the bug in, and what was wrong with the code?
      Explain why that code produced the behavior described in the ticket. -->
 
-**File / function:**
+**File / function:**  GameScreenController.ts -> handleLemonClick() -> randomizeLemonPosition()
 
-**What was wrong:**
+**What was wrong:** random position generated was always 0 or 1 with the founding
+		// Generate random position
+		const randomX = Math.round(Math.random()) * (maxX - minX) + minX;
+		const randomY = Math.round(Math.random()) * (maxY - minY) + minY;
 
 ### Fix
 
 <!-- What did you change, and why does that change fix the problem? -->
 
-### How did you find it?
+### How did you find it? hypothesis testing in assuming the position being updated was wrong, so position is where i should look
+
+LOOKED IN THE GAME SCREEN FOLDER, CONSIDERED THE LEMON, CONSIDERED THE LEMON ACTIONS, CONSIDER THE RESET POSITION AFTER CLICK
 
 #### Hypothesis testing
 
@@ -134,16 +139,26 @@ i saw the expected behavior whne displaying the score report in the menu
      until you reach the buggy line. For each step, note where you looked
      and what you saw there. Add steps as needed. -->
 
-1. **Symptom:** <!-- what you saw, e.g. text on screen, console error -->
-2. **Traced back to:** <!-- where that came from, e.g. a function, a request in the Network tab, a server log -->
+1. **Symptom:** <!-- what you saw, e.g. text on screen, console error --> random positions were limited since the math to generate was wrong
+2. **Traced back to:** GameScreenController.ts -> handleLemonClick() -> randomizeLemonPosition()
 3. **Traced back to:**
 4. **Buggy code:** <!-- the file, function and line where the trace ended -->
+
+WRONG
+		// Generate random position
+		const randomX = Math.round(Math.random()) * (maxX - minX) + minX;
+		const randomY = Math.round(Math.random()) * (maxY - minY) + minY;
+
+    CORRECT
+        		// Generate random position
+		const randomX = Math.round(Math.random() * (maxX - minX) + minX);
+		const randomY = Math.round(Math.random() * (maxY - minY) + minY);
 
 <!-- It is okay to use your judgement here in limiting the number of traceback steps. We want to understand your 
     reasoning for how you discovered where the bug was -->
 
 ### Confirming the fix
 
-<!-- How did you confirm the problem is gone? -->
+i played the game and saw updated random positions
 
 ----------------------------------------------------------------------------------------------------

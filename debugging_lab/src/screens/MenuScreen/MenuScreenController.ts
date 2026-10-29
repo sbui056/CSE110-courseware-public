@@ -49,7 +49,6 @@ export class MenuScreenController extends ScreenController {
 		if (!response.ok) {
 			throw new Error("Unable to load stats");
 		}
-		console.log(response);
 		return (await response.json()) as LeaderboardStats;
 	}
 
