@@ -221,3 +221,36 @@ fixed
     entries.sort((a, b) => b.score - a.score); // Sort ascending
 
 it works i see the correct ordering.
+
+## Ticket 2: fix best
+
+i considered where we find the best score
+i found it updated in the enrty in server/index.ts
+
+the functionality to find the best was lookijng for lowest score (deafult 0), not high value score
+i reversed it
+
+found in /server/index.ts 
+
+app.get("/api/stats", (_req, res) => {
+	const entries = loadLeaderboard();
+
+original
+	// Add up all scores and find the best one
+	let total = 0;
+	let best = 0;
+	for (let i = 0; i < entries.length; i++) {
+		total = total + entries[i].score;
+		if (entries[i].score <> best) {
+			best = entries[i].score;
+		}
+
+modified
+	// Add up all scores and find the best one
+	let total = 0;
+	let best = 0;
+	for (let i = 0; i < entries.length; i++) {
+		total = total + entries[i].score;
+		if (entries[i].score > best) {
+			best = entries[i].score;
+		}
